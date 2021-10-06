@@ -2,7 +2,7 @@
 import argparse
 import json
 import copy
-import collections
+from collections import OrderedDict
 
 
 def generate_diff(filepath1, filepath2):
@@ -23,15 +23,15 @@ def generate_diff(filepath1, filepath2):
     for i in dict:
         j = ('+ ' + i)
         plusresult[j] = plusresult.pop(i)
-    dict = copy.deepcopy(sameresult)    
+    dict = copy.deepcopy(sameresult)
     for i in dict:
         j = ('  ' + i)
         sameresult[j] = sameresult.pop(i)
     print('{')
     result = minusresult
     result.update(sameresult)
-    result.update(plusresult)    
-    sortedd = collections.OrderedDict(sorted(result.items(), key=lambda s: s[0][2:]))
+    result.update(plusresult)
+    sortedd = OrderedDict(sorted(result.items(), key=lambda s: s[0][2:]))
     for i in sortedd:
         print(i, sortedd.get(i))
     print('}')
@@ -43,12 +43,13 @@ def main():
     parser.add_argument("first_file", help="echo the string you use here")
     parser.add_argument("second_file", help="echo the string you use here")
     parser.add_argument("-f", help="set format of output", action="store_true")
-    parser.add_argument("--format", help="set format of output", action="store_true")
+    help = "set format of output"
+    parser.add_argument("--format", help=help, action="store_true")
     args = parser.parse_args()
     if args.format:
-       print("format")
+        print("format")
     if args.f:
-       print("verbosity turned on")
+        print("verbosity turned on")
     generate_diff(args.first_file, args.second_file)
 
 
