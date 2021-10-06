@@ -25,3 +25,9 @@ jobs:
         run: pip install pytest
       - name: Run tests with pytest
         run: pipenv run pytest
+      - name: CodeClimat
+      - uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: 5383f93b8b0ed083d1d33bb727e66a6c68fd0964f26d2e90b7b93390b85f66ac
+        with:
+          coverageCommand: make test-coverage
